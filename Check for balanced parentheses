@@ -1,0 +1,49 @@
+class Stack:
+    def __init__(self):
+        self.tos=-1
+        self.arr=[]
+
+    def push(self,data):
+        self.arr.append(data)
+        self.tos += 1
+
+    def pop(self):
+        if(self.isEmpty()):
+            return
+        self.arr.pop()
+        self.tos-=1
+
+    def top(self):
+        if(self.isEmpty()):
+            return
+        return self.arr[self.tos]
+
+    def size(self):
+        return self.tos+1
+
+    def isEmpty(self):
+        return self.tos==-1
+class Solution:
+    def isValid(self, s: str) -> bool:
+        s1=Stack()
+        flag = 1
+        for i in s:
+            if(i =='(' or i=='[' or i=='{'):
+                s1.push(i)
+            else:
+                if(s1.isEmpty()):
+                    flag=0
+                    break
+                if(s1.top()=='(' and i==')') or (s1.top()=='[' and i==']') or (s1.top()=='{' and i=='}'):
+                    s1.pop()
+                else:
+                    flag=0
+                    
+
+
+        if(s1.isEmpty() is False or flag==0):
+            return False
+        return True
+
+        
+#https://leetcode.com/problems/valid-parentheses/
