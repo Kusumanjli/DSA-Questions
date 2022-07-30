@@ -10,10 +10,7 @@ class Solution:
             return 0
         lside=self.maxDepth(root.left)
         rside=self.maxDepth(root.right)
+        return max(lside,rside)+1
         
-        if(lside>rside):
-            return lside+1
-        else:
-            return rside+1
         
 #https://leetcode.com/problems/maximum-depth-of-binary-tree/submissions/
