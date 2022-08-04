@@ -1,0 +1,39 @@
+def parent(i):
+    return (i-1)//2
+
+def left(i):
+    return (2*i)+1
+
+def right(i):
+    return (2*i)+2
+
+def print_heap(heap,n):
+    for i in range(n):
+        print(heap[i],end=' ')
+
+
+def insert(heap,i,ele):
+    heap[i]=ele
+    heapify_up(heap,i)
+
+def heapify_up(heap,i):
+    while(i!=0 and heap[parent(i)]<heap[i]):
+        heap[parent(i)],heap[i]=heap[i],heap[parent(i)]
+        i=parent(i)
+
+def main():
+    T=int(input())
+    for i in range(T):
+        n=int(input())
+        arr=input().split()
+        heap=[None]*n
+        i=0
+        for ele in arr:
+            insert(heap,i,int(ele))
+            i+=1
+        print_heap(heap,n)
+
+
+
+if __name__=="__main__":
+    main()
