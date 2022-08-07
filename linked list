@@ -1,0 +1,466 @@
+'''
+#Circular Linked List
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+'''
+'''
+x=Node(10)
+y=Node(20)
+z=Node(30)
+x.next=y
+y.next=z
+z.next=x
+
+temp=x
+while(True):
+    print(temp.data,end=' ')
+    temp=temp.next
+    if(temp==x):
+        break
+'''
+'''
+class circular_list():
+    def __init__(self):
+        self.head=None
+        self.tail=None
+
+    def insert_at_begin(self,data):
+        newNode=Node(data)
+        if(self.head is None):
+            self.head=newNode
+            self.tail=newNode
+            self.tail.next=self.head
+        else:
+            newNode.next=self.head
+            self.head=newNode
+            self.tail.next=self.head
+
+    def insert_at_end(self,data):
+        newNode=Node(data)
+        if (self.head is None):
+            self.head = newNode
+            self.tail = newNode
+            self.tail.next = self.head
+        else:
+            self.tail.next=newNode
+            self.tail=newNode
+            self.tail.next=self.head
+
+    def insert_at_i(self,i,data):
+        n=self.length()
+        newNode=Node(data)
+        if(i>=n):
+            return
+        elif(i==0):
+            self.insert_at_begin(data)
+        elif(i==n-1):
+            self.insert_at_end(data)
+        else:
+            temp=self.head
+            count=0
+            while(temp.next is not None and count!=i-1):
+                count+=1
+                temp=temp.next
+            newNode.next=temp.next
+            temp.next=newNode
+
+    def length(self):
+        count=0
+        temp=self.head
+        while(True):
+            count+=1
+            temp=temp.next
+            if(temp==self.head):
+                break
+        return count
+
+    def delete_at_end(self):
+        if(self.head is None):
+            return
+        elif(self.head.next==self.head):
+            self.head=None
+            self.tail=None
+            return
+        else:
+            temp=self.head
+            while(temp.next is not self.tail):
+                temp=temp.next
+            self.tail.next=None
+            self.tail=temp
+            self.tail.next=self.head
+
+    def delete_at_begin(self):
+        if (self.head is None):
+            return
+        elif (self.head.next == self.head):
+            self.head = None
+            self.tail = None
+            return
+        else:
+            self.head=self.head.next
+            self.tail.next=self.head
+
+    def delete_at_i(self,i):
+        n = self.length()
+        if (self.head is None):
+            return
+        elif (i == 0):
+            self.delete_at_begin()
+        elif (i == n - 1):
+            self.delete_at_end()
+        else:
+            count = 0
+            temp = self.head
+            while (True and count!=i-1):
+                temp = temp.next
+                if (temp == self.head):
+                    break
+            temp.next = temp.next.next
+
+
+
+
+    def print(self):
+        temp=self.head
+        while(True):
+            print(temp.data,end=' ')
+            temp=temp.next
+            if(temp==self.head):
+                break
+
+def main():
+    circular_list1=circular_list()
+    arr=list(map(int,input().split()))
+    for i in range(len(arr)):
+        circular_list1.insert_at_end(arr[i])
+    circular_list1.insert_at_i(2,4)
+    print(circular_list1.length())
+    circular_list1.delete_at_i(2)
+    circular_list1.print()
+
+if __name__=='__main__':
+    main()
+'''
+# ----------------------------------------------------------------------------------------------------------------
+
+#doubly linked list
+class Node:
+    def __init__(self,data):
+        self.data=data
+        self.prev=None
+        self.next=None
+class double_list:
+    def __init__(self):
+        self.head=None
+        self.tail=None
+
+    def insert_at_end(self,data):
+        newNode=Node(data)
+        if(self.head is None):
+            self.head=newNode
+            self.tail=newNode
+            return
+        else:
+            self.tail.next=newNode
+            newNode.prev=self.tail
+            self.tail=newNode
+
+    def insert_at_begin(self,data):
+        newNode=Node(data)
+        if(self.head is None):
+            self.head=newNode
+            self.tail=newNode
+            return
+        else:
+            self.head.prev=newNode
+            newNode.next=self.head
+            self.head=newNode
+
+    def length(self):
+        temp=self.head
+        count=0
+        while(temp is not None):
+            count+=1
+            temp=temp.next
+        return count
+
+    def insert_at_i(self,i,data):
+        newNode=Node(data)
+        n=self.length()
+        if(i==0):
+            self.insert_at_begin(data)
+        elif(i==n-1):
+            self.insert_at_end(data)
+        elif(i>n):
+            print('invalid')
+            return
+        else:
+            temp=self.head
+            count=0
+            while(temp.next is not None and count!=i-1):
+                count+=1
+                temp=temp.next
+            newNode.prev=temp
+            newNode.next=temp.next
+            temp.next.prev=newNode
+            temp.next=newNode
+    def delete_at_end(self):
+        if (self.head is None):
+            return
+        else:
+            temp = self.tail.prev
+            self.tail.prev = None
+            temp.next = None
+            self.tail = temp
+
+    def delete_at_begin(self):
+        if (self.head is None):
+            return
+        else:
+            temp = self.head.next
+            if(temp is None):
+                head=None
+                return
+            else:
+                self.head.next = None
+                temp.prev = None
+                self.head = temp
+
+    def delete_at_i(self,i):
+        n=self.length()
+        if(i>=n):
+            return
+        elif(i==0):
+            self.delete_at_begin()
+        elif(i==n-1):
+            self.delete_at_end()
+        else:
+            temp=self.head
+            count=0
+            while(temp.next is not None and count!=i):
+                count+=1
+                temp=temp.next
+            temp1=temp.prev
+            temp2=temp.next
+            temp1.next=temp2
+            temp2.prev=temp1
+            temp.next=None
+            temp.prev=None
+
+
+    def print(self):
+        temp=self.head
+        while(temp is not None):
+            print(temp.data,end=' ')
+            temp=temp.next
+
+def main():
+    double_list1=double_list()
+    arr=list(map(int,input().split()))
+    for i in range(len(arr)):
+        double_list1.insert_at_end(arr[i])
+    double_list1.insert_at_i(0,100)
+    double_list1.delete_at_i()
+    double_list1.print()
+
+if __name__=="__main__":
+    main()
+
+
+'''
+x=Node(1)
+y=Node(2)
+z=Node(3)
+x.next=y
+y.prev=x
+y.next=z
+z.prev=y
+temp=x
+while(temp is not None):
+    print(temp.prev,end=' ')
+    print(temp.data,end=' ')
+    print(temp.next,end=' ')
+    temp=temp.next
+    
+'''
+
+# ----------------------------------------------------------------------------------------------------------------------
+'''
+# Singly Linked List
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+'''
+
+'''Creating a node
+x=Node(10)
+y=Node(20)
+print(x)
+print(y)
+print(x.data)
+print(x.next)
+print(y.data)
+print(y.next)
+x.next=y
+print(x.next)
+print(x.next.data)
+#print(y.next.data)
+x.data=50
+print(x.data)
+'''
+
+'''
+class linked_list:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+
+    def insert_at_end(self, data):
+        # O(n) complexity
+        newNode = Node(data)
+        if (self.head is None):
+            self.head = newNode
+        else:
+            temp = self.head
+            while (temp.next is not None):
+                temp = temp.next
+            temp.next = newNode
+
+    def insert_at_end_tail(self, data):
+        # O(1) complexity
+        newNode = Node(data)
+        if (self.head is None):
+            self.head = newNode
+            self.tail = newNode
+        else:
+            self.tail.next = newNode
+            self.tail = newNode
+
+    def insert_at_beginning(self, data):
+        newNode = Node(data)
+        if (self.head is None):
+            self.head = newNode
+        else:
+            newNode.next = self.head
+            self.head = newNode
+
+    def insert_at_i(self, i, data):
+        newNode = Node(data)
+        if (i == 0):
+            self.insert_at_beginning(data)
+        else:
+            count = 0
+            temp = self.head
+            while (temp.next is not None and count != i - 1):
+                count += 1
+                temp = temp.next
+            if (temp.next is None and i > count + 1):
+                return
+            else:
+                newNode.next = temp.next
+                temp.next = newNode
+
+    def length_iteratively(self):
+        temp = self.head
+        count = 0
+        while (temp is not None):
+            count += 1
+            temp = temp.next
+        return count
+
+    def length_recursively(self, temp):
+        if (temp is None):
+            return 0
+        return 1 + self.length_recursively(temp.next)
+
+    def delete_at_end(self):
+        if (self.head is None):
+            return
+        elif (self.head.next is None):
+            self.head = None
+        else:
+            SL = self.head
+            while (SL.next is not None):
+                SL = SL.next
+            SL.next = None
+            self.tail = SL
+
+    def delete_at_begin(self):
+        if (self.head is None):
+            return
+        else:
+            self.head = self.head.next
+
+    def delete_at_i(self, i):
+        n = self.length_iteratively()
+        if (self.head is None):
+            return
+        elif (i == 0):
+            self.delete_at_begin()
+        elif (i == n - 1):
+            self.delete_at_end()
+        else:
+            count = 0
+            temp = self.head
+            while (temp is not None and count != i - 1):
+                count += 1
+                temp = temp.next
+            temp.next = temp.next.next
+
+    def reverse_list_iteratively(self):
+        prev = None
+        next1 = None
+        curr = self.head
+        while (curr is not None):
+            next1 = curr.next
+            curr.next = prev
+            prev = curr
+            curr = next1
+        self.head = prev
+        return self.head
+
+    def reverse_list_recursively(self, curr, prev):
+        if (curr is None):
+            self.head = prev
+            return
+        next = curr.next
+        curr.next = prev
+        self.reverse_list_recursively(next, prev)
+
+    def print_list(self):
+        temp = self.head
+        while (temp is not None):
+            print(temp.data, end=' ')
+            # print(temp, end=' ')
+            # print(temp.next)
+            temp = temp.next
+        print()
+
+
+def main():
+    single_linked_list = linked_list()
+    single_linked_list1 = linked_list()
+    arr = list(map(int, input().split()))
+    for i in range(len(arr)):
+        single_linked_list.insert_at_beginning(arr[i])
+        # single_linked_list1.insert_at_end(arr[i])
+    single_linked_list1.insert_at_i(1,100)
+
+    single_linked_list.print_list()
+    single_linked_list1.print_list()
+    print(single_linked_list.length_iteratively())
+    temp=single_linked_list.head
+    print(single_linked_list.length_recursively(temp))
+    single_linked_list.delete_at_i(2)
+    single_linked_list.print_list()
+    single_linked_list.reverse_list_recursively(single_linked_list1.head,None)
+    #single_linked_list.reverse_list_iteratively()
+    single_linked_list.print_list()
+
+
+if __name__ == '__main__':
+    main()
+'''
