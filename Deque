@@ -1,0 +1,152 @@
+'''
+#using list
+class Deque:
+    def __init__(self):
+        self._dq=[]#using _ make it protected so that only class can use it and no one can directly use it
+
+    def isEmpty(self):
+        return self._dq==[]
+
+    def insertF(self,data):
+        self._dq.append(data)
+
+    def insertR(self,data):
+        self._dq.insert(data,0)
+
+    def deleteF(self):
+        self._dq.pop(0)
+
+    def deleteR(self):
+        self._dq.pop()
+
+    def size(self):
+        return len(self._dq)
+
+    def print(self):
+        for i in self._dq:
+            print(i,end=' ')
+        print()
+'''
+'''
+#using doubly linked list
+class Node:
+    def __init__(self,data):
+        self.data=data
+        self.prev=None
+        self.next=None
+
+class Deque:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+
+
+    def isEmpty(self):
+        if (self.head is None):
+            return True
+        return False
+
+    def insertF(self,data):
+        newNode = Node(data)
+        if (self.head is None):
+            self.head = newNode
+            self.tail = newNode
+            return
+        else:
+            self.head.prev = newNode
+            newNode.next = self.head
+            self.head = newNode
+
+    def insertR(self,data):
+        newNode = Node(data)
+        if (self.head is None):
+            self.head = newNode
+            self.tail = newNode
+            return
+        else:
+            self.tail.next = newNode
+            newNode.prev = self.tail
+            self.tail = newNode
+
+    def deleteF(self):
+        if (self.head is None):
+            return
+        else:
+            temp = self.head.next
+            if (temp is None):
+                head = None
+                return
+            else:
+                self.head.next = None
+                temp.prev = None
+                self.head = temp
+    def deleteR(self):
+        if (self.head is None):
+            return
+        else:
+            temp = self.tail.prev
+            self.tail.prev = None
+            temp.next = None
+            self.tail = temp
+
+    def size(self):
+        temp = self.head
+        count = 0
+        while (temp is not None):
+            count += 1
+            temp = temp.next
+        return count
+
+    def print(self):
+        temp = self.head
+        while (temp is not None):
+            print(temp.data, end=' ')
+            temp = temp.next
+
+
+def main():
+    deque=Deque()
+    deque.insertF(2)
+    deque.insertF(3)
+    deque.insertR(4)
+    deque.insertR(12)
+    deque.insertF(12)
+    deque.deleteF()
+    deque.deleteR()
+    print(deque.isEmpty())
+    print(deque.size())
+    deque.print()
+
+if __name__=="__main__":
+    main()
+'''
+#Inbulit Deque
+import collections
+
+def main():
+    dq=collections.deque()
+    dq.append(2)
+    dq.append(3)
+    dq.append(4)
+    print(dq)
+    dq.appendleft(55)
+    dq.appendleft(3)
+    dq.pop()
+    dq.popleft()
+    print(dq.index(55,0,3))
+    dq.extend([1,2,3])
+    dq.extendleft([1,2,3])
+    dq.reverse()
+    dq.remove(55)
+    dq.count(3)
+    print(dq)
+    dq.rotate(-2)
+    print(dq)
+
+
+
+
+
+
+if __name__ == "__main__":
+    main()
