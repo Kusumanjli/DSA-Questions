@@ -1,0 +1,224 @@
+'''
+#Using Linked List
+class Node:
+    def __init__(self,data):
+        self.data = data
+        self.next = None
+class Stack:
+    def __init__(self):
+        self.tos=-1
+        self.head=None
+
+    def push(self,data):
+        #Insertion at beginning
+        self.tos += 1
+        newNode = Node(data)
+        if (self.head is None):
+            self.head = newNode
+        else:
+            newNode.next = self.head
+            self.head = newNode
+
+
+    def pop(self):
+        #Deletion at beginning
+        if (self.head is None):
+            return
+        else:
+            self.head = self.head.next
+            self.tos -= 1
+
+    def top(self):
+        if(self.isEmpty()):
+            return
+        return self.head.data
+
+    def size(self):
+        return self.tos+1
+
+    def isEmpty(self):
+        if(self.head is None):
+            return  True
+        return False
+
+'''
+''''''
+#Using Array
+class Stack:
+    def __init__(self):
+        self.tos=-1
+        self.arr=[]
+
+    def push(self,data):
+        self.arr.append(data)
+        self.tos += 1
+
+    def pop(self):
+        if(self.isEmpty()):
+            return
+        self.arr.pop()
+        self.tos-=1
+
+    def top(self):
+        if(self.isEmpty()):
+            return
+        return self.arr[self.tos]
+
+    def size(self):
+        return self.tos+1
+
+    def isEmpty(self):
+        return self.tos==-1
+'''
+#Stack Implemetation
+def main():
+    s1=Stack()
+    T=int(input())
+    for i in range(T):
+        arr=list(map(int,input().split()))
+        for i in arr:
+            s1.push(int(i))
+        while(s1.size()!=0):
+            s1.pop()
+            print(s1.top())
+        print(s1.size())
+        print(s1.isEmpty())
+'''
+'''
+#Balanced Bracket Expression-1
+def main():
+    T=int(input())
+    s1=Stack()
+    for i in range(T):
+        flag = 1
+        str=input()
+        for i in str:
+            if(i =='('):
+                s1.push(i)
+            else:
+                if(s1.isEmpty()):
+                    flag=0
+                    break
+                else:
+                    s1.pop()
+        if(s1.isEmpty() is False or flag==0):
+            print("Unbalanced")
+        else:
+            print("Balanced")
+'''
+'''
+#Balanced Bracket Expression-2
+def main():
+    T=int(input())
+    s1=Stack()
+    for i in range(T):
+        flag = 1
+        str=input()
+        for i in str:
+            if(i =='(' or i=='[' or i=='{'):
+                s1.push(i)
+            else:
+                if(s1.isEmpty()):
+                    flag=0
+                    break
+                if(s1.top()=='(' and i==')') or (s1.top()=='[' and i==']') or (s1.top()=='{' and i=='}'):
+                    s1.pop()
+
+
+        if(s1.isEmpty() is False or flag==0):
+            print("Unbalanced")
+        else:
+            print("Balanced")
+
+'''
+#Infix to Postfix
+def precendence(str):
+    if(str=='^'):
+        return 3
+    if(str=='*' or str=='/'):
+        return 2
+    if(str=='+' or str=='-'):
+        return 1
+    if(str==')' or str=='('):
+        return -1
+    else:
+        return 0
+'''
+#Infix to Postfix
+def main():
+    s1=Stack()
+    arr=list(input())
+    ans=""
+    for i in arr:
+        val=precendence(i)
+        if(val==0):
+            ans+=i
+        else:
+            if(i=='('):
+                s1.push(i)
+            elif(i==')'):
+                while(s1.isEmpty() is False or s1.top()=='('):
+                    ans+=s1.top()
+                    s1.pop()
+                if(s1.top()=='('):
+                    s1.pop()
+            else:
+                while(s1.isEmpty() is False and precendence(i)<=precendence(s1.top())):
+                    ans+=s1.top()
+                    s1.pop()
+                s1.push(i)
+    while(s1.isEmpty() is False):
+        ans+=s1.top()
+        s1.pop()
+    print(ans)
+'''
+'''
+#evaluate postfix
+def isOpr(opr):
+    list1=['+','-','*','/','^']
+    if opr in list1:
+        return list1.index(opr)
+    else:
+        return -1
+
+def main():
+    s1=Stack()
+    arr=list(input())
+    ans=''
+    for i in arr:
+        val=isOpr(i)
+        if(val==-1):
+            s1.push(int(i))
+        else:
+            op1=s1.top()
+            s1.pop()
+            op2=s1.top()
+            s1.pop()
+            if val==0:
+                s1.push(op2+op1)
+            if val==1:
+                s1.push(op2-op1)
+            if val==2:
+                s1.push(op2*op1)
+            if val==3:
+                s1.push(op2/op1)
+            if val==4:
+                s1.push(op2^op1)
+    print(s1.top())
+'''
+def stackSort(s):
+    if(len(s)==0):
+        return
+    top=s.pop()
+def main():
+    s1=list(map(int,input().split()))
+    stackSort(s1)
+    print()
+
+
+
+
+
+
+if __name__=='__main__':
+    main()
