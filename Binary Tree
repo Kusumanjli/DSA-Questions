@@ -1,0 +1,166 @@
+class Node:
+    def __init__(self,data):
+        self.data=data
+        self.left=None
+        self.right=None
+class Queue:
+    def __init__(self):
+        self.que=[]
+        self.front=0
+        self.size=0
+
+    def enqueue(self,data):
+        self.que.append(data)
+        self.size+=1
+
+    def dequeue(self):
+        if(self.isEmpty()):
+            print("Queue is Empty")
+        temp=self.que[self.front]
+        self.front+=1
+        self.size-=1
+
+    def isEmpty(self):
+        return self.size==0
+
+    def frontEle(self):
+        if (self.isEmpty()):
+            print("Queue is Empty")
+        return self.que[self.front]
+
+    def printque(self):
+        if (self.isEmpty()):
+            print("Queue is Empty")
+        for i in range(self.size):
+            print(self.que[self.front+i],end=" ")
+        print()
+'''
+x=Node(1)
+y=Node(2)
+z=Node(3)
+p=Node(4)
+q=Node(5)
+x.left=y
+x.right=z
+y.left=p
+z.right=q
+print(x.data,x.left,x.right)
+print(y)
+print(z)
+'''
+def inorder(root):
+    if(root is None):
+        return
+    inorder(root.left)
+    print(root.data,end=' ')
+    inorder(root.right)
+
+def preorder(root):
+    if (root is None):
+        return
+    print(root.data,end=' ')
+    preorder(root.left)
+    preorder(root.right)
+
+def postorder(root):
+    if (root is None):
+        return
+    postorder(root.left)
+    postorder(root.right)
+    print(root.data,end=' ')
+
+def size(root):
+    if(root is None):
+        return 0
+    lside=size(root.left)
+    rside=size(root.right)
+    return lside+rside+1
+
+def height(root):
+    if (root is None):
+        return -1
+    lside = height(root.left)
+    rside = height(root.right)
+    if(lside>rside):
+        return lside+1
+    else:
+        return rside+1
+
+def minvalue(root):
+    if (root is None):
+        return 1000000000
+    res=root.data
+    lside=minvalue(root.left)
+    rside=minvalue(root.right)
+    return min(res,lside,rside)
+
+def balanced_tree(root):
+    if(root is None):
+        return True
+    lh=height(root.left)
+    rh=height(root.right)
+    if(lh-rh>1 or rh-lh>1):
+        return False
+    lside=balanced_tree(root.left)
+    rside=balanced_tree(root.right)
+    if(lside and rside):
+        return True
+    else:
+        return False
+from queue import Queue
+
+def tree_from_leve(ip):
+    for i in range(len(ip)):
+        if(len(ip)==0 or ip[0]==-1):
+            return None
+        root=Node(ip[0])
+        q1=Queue()
+        q1.put(root)
+        i=1
+        while(q1.empty() is False and i<len(ip)):
+            currNode=q1.get()
+            currval=ip[i]
+            if(currval!='-1'):
+                currNode.left=Node(currval)
+                q1.put(currNode.left)
+            i+=1
+            if(i>len(ip)):
+                break
+            currval=ip[i]
+            if (currval != '-1'):
+                currNode.right = Node(currval)
+                q1.put(currNode.left)
+            i=i+1
+        return root
+
+def main():
+    arr=list(input().split())
+    root=tree_from_leve(arr)
+    inorder(root)
+
+
+'''
+def main():
+    root=Node(1)
+    root.left=Node(2)
+    root.right=Node(3)
+    root.left.left=Node(4)
+    root.left.right=Node(5)
+    root.left.left.right=Node(8)
+    root.right.left=Node(6)
+    root.right.left.left=Node(9)
+    root.right.right=Node(7)
+    inorder(root)
+    print()
+    preorder(root)
+    print()
+    postorder(root)
+    print()
+    print(size(root))
+    print(height(root))
+    print(minvalue(root))
+    print(balanced_tree(root))
+'''
+
+if __name__=='__main__':
+    main()
