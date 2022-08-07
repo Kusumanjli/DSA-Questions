@@ -1,0 +1,342 @@
+'''
+#M-2:Where Dequeue takes more time
+class Stack:
+    def __init__(self):
+        self.tos=-1
+        self.arr=[]
+
+    def push(self,data):
+        self.arr.append(data)
+        self.tos += 1
+
+    def pop(self):
+        if(self.isEmpty()):
+            return
+        self.arr.pop()
+        self.tos-=1
+
+    def top(self):
+        if(self.isEmpty()):
+            return
+        return self.arr[self.tos]
+
+    def size(self):
+        return self.tos+1
+
+    def isEmpty(self):
+        return self.tos==-1
+class Queue:
+    def __init__(self):
+        self.s1 = Stack()
+        self.s2 = Stack()
+        self.size = 0
+
+    def enqueue(self,data):
+        self.s1.push(data)
+        self.size+=1
+
+    def dequeue(self):
+        if(self.s1.isEmpty() and self.s2.isEmpty()):
+            print('Queue is Empty')
+            return
+        if(self.s2.isEmpty()):
+            while (self.s1.isEmpty() is False):
+                self.s2.push(self.s1.top())
+                self.s1.pop()
+        data=self.s2.top()
+        self.s2.pop()
+        self.size-=1
+
+    def isEmpty(self):
+        return self.size == 0
+
+    def frontEle(self):
+        if (self.s1.isEmpty()):
+            print("Queue is Empty")
+            return
+        return self.s1.top()
+
+    def printque(self):
+        if (self.s1.isEmpty()):
+            print("Queue is Empty")
+            return
+        while (self.s1.tos >= 0):
+            print(self.s1.top())
+            self.s1.pop()
+        print()
+'''
+
+'''
+#M-1:Where Enqueue takes more time
+class Stack:
+    def __init__(self):
+        self.tos=-1
+        self.arr=[]
+
+    def push(self,data):
+        self.arr.append(data)
+        self.tos += 1
+
+    def pop(self):
+        if(self.isEmpty()):
+            return
+        self.arr.pop()
+        self.tos-=1
+
+    def top(self):
+        if(self.isEmpty()):
+            return
+        return self.arr[self.tos]
+
+    def size(self):
+        return self.tos+1
+
+    def isEmpty(self):
+        return self.tos==-1
+
+class Queue:
+    def __init__(self):
+        self.s1=Stack()
+        self.s2=Stack()
+        self.size=0
+
+    def enqueue(self,data):
+        while(self.s1.isEmpty() is False):
+            self.s2.push(self.s1.top())
+            self.s1.pop()
+
+        self.s1.push(data)
+        self.size+=1
+
+        while(self.s2.isEmpty() is False):
+            self.s1.push(self.s2.top())
+            self.s2.pop()
+
+    def dequeue(self):
+        if(self.s1.isEmpty()):
+            print("Queue is Empty")
+            return
+        data=self.s1.top()
+        self.s1.pop()
+        self.size-=1
+
+    def isEmpty(self):
+        return self.size==0
+
+    def frontEle(self):
+        if (self.s1.isEmpty()):
+            print("Queue is Empty")
+            return
+        return self.s1.top()
+
+
+    def printque(self):
+        if (self.s1.isEmpty()):
+            print("Queue is Empty")
+            return
+        while(self.s1.tos>=0):
+            print(self.s1.top())
+            self.s1.pop()
+        print()
+'''
+
+'''
+#using Linked List
+class Node:
+    def __init__(self,data):
+        self.next=None
+        self.data=data
+
+class Queue:
+    def __init__(self):
+        self.size=0
+        self.head=None#front
+        self.tail=None#rear
+
+    def enqueue(self,data):
+        newNode = Node(data)
+        if (self.head is None):
+            self.head = self.tail=newNode
+            self.size+=1
+            return
+        else:
+            self.tail.next=newNode
+            self.tail=newNode
+            self.size+=1
+
+    def dequeue(self):
+        if (self.isEmpty()):
+            print("Queue is Empty")
+            return
+        if(self.size==1):
+            temp=self.head.data
+            self.head = self.tail=None
+            self.size-=1
+            return
+        temp=self.head.data
+        self.head=self.head.next
+        self.size-=1
+
+    def frontEle(self):
+        if (self.isEmpty()):
+            print("Queue is Empty")
+            return
+        return self.head.data
+
+    def printque(self):
+        if (self.isEmpty()):
+            print("Queue is Empty")
+            return
+        temp = self.head
+        while (temp is not None):
+            print(temp.data, end=' ')
+            temp = temp.next
+        print()
+
+    def isEmpty(self):
+        return self.size==0
+
+'''
+
+'''
+#using python List
+class Queue:
+    def __init__(self):
+        self.que=[]
+        self.front=0
+        self.size=0
+
+    def enqueue(self,data):
+        self.que.append(data)
+        self.size+=1
+
+    def dequeue(self):
+        if(self.isEmpty()):
+            print("Queue is Empty")
+        temp=self.que[self.front]
+        self.front+=1
+        self.size-=1
+
+    def isEmpty(self):
+        return self.size==0
+
+    def frontEle(self):
+        if (self.isEmpty()):
+            print("Queue is Empty")
+        return self.que[self.front]
+
+    def printque(self):
+        if (self.isEmpty()):
+            print("Queue is Empty")
+        for i in range(self.size):
+            print(self.que[self.front+i],end=" ")
+        print()
+'''
+'''
+
+#using Circular Array
+class Queue:
+    def __init__(self,capacity):
+        self.cap=capacity
+        self.front=-1
+        self.rear=-1
+        self.size=0
+        self.que=[None]*capacity
+
+    def isEmpty(self):
+        return self.rear==self.front==-1
+
+
+    def enqueue(self,data):
+        #Queue Empty
+        if(self.isEmpty()):
+            self.rear=self.front=0
+            self.que[self.rear]=data
+            self.size+=1
+            return
+        #Queue Full
+        if((self.rear+1)%self.cap==self.front):
+            print("Queue is Full")
+            return
+        self.rear=(self.rear+1)%self.cap
+        self.que[self.rear]=data
+        self.size+=1
+
+    def dequeue(self):
+        #Queue Empty
+        if(self.isEmpty()):
+            print("Queue is Empty")
+            return
+        #SIngle Element
+        if(self.front==self.rear):
+            self.front=self.rear=-1
+            temp=self.que[self.front]
+            self.size-=1
+            return
+
+        self.front=(self.front+1)%self.cap
+        temp=self.que[self.front]
+        self.size-=1
+
+    def FrontELE(self):
+        if(self.isEmpty()):
+            print("Queue is Empty")
+            return
+        return self.que[self.front]
+
+    def printque(self):
+        for i in range(self.size):
+            print(self.que[(self.front+i)%self.cap],end=" ")
+        print()
+
+'''
+'''
+#using Stack
+def main():
+    cap=int(input())
+    que=list(map(int,input().split()))
+    q1=Queue()
+    for i in que:
+        q1.enqueue(i)
+    q1.printque()
+    q1.dequeue()
+    q1.printque()
+    print(q1.size)
+    q1.enqueue(10)
+    q1.printque()
+    print(q1.size)
+
+
+if __name__=="__main__":
+    main()
+'''
+#Inbulit Queue
+from queue import Queue
+from  queue import LifoQueue
+
+q=Queue(maxsize=10)
+q.put(10)
+q.put(20)
+q.put(30)
+q.put(30)
+q.put(30)
+q.put(30)
+q.put(30)
+q.put(30)
+q.put(30)
+q.put(30)
+q.get()
+#q.get()
+print(q.empty())
+print(q.full())
+print(q.qsize())
+q.put_nowait(10)
+q.get_nowait()
+
+
+
+
+
+
+
+
